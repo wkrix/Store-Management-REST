@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="#{product.list.page.title}">Product list page</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width"/>
+
+    <link rel="stylesheet" media="screen" th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"/>
+    <script th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.5/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div th:replace="fragments :: header">Header</div>
+<div class="container">
+    <h2 th:text="#{table.product.title}">Products</h2>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th th:text="#{table.product.header.name}">Name</th>
+            <th th:text="#{table.product.header.description}">Description</th>
+            <th th:text="#{table.product.header.creationDate}">Creation Date</th>
+            <th th:text="#{table.product.header.validityDate}">Validity Date</th>
+            <th><span class="glyphicon glyphicon-edit"></span></th>
+            <th><span class="glyphicon glyphicon-remove-circle"></span></th>
+            <th><span class="glyphicon glyphicon-tasks"></span></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p : ${productDTOList}">
+            <td th:text="${p.name}">Product Budapest</td>
+            <td th:text="${p.description}">Product for toxic substance</td>
+            <td th:text="${{p.creationDate}}">2015-12-12</td>
+            <td th:text="${{p.validityDate}}">2016-12-13</td>
+            <td><a th:href="@{${'/product/modify/' + p.id}}"><span th:text="#{table.modify}">Modify</span></a></td>
+            <td><a th:href="@{${'/product/delete/' + p.id}}"><span th:text="#{table.delete}">Delete</span></a></td>
+            <td>
+                <a class="btn btn-warning" th:href="@{${'/stockmovement/do_stockmovement/' + p.id}}"><span
+                        th:text="#{product.do.stockmovement}">Move</span></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

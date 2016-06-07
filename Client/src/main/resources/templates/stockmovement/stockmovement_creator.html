@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="#{stockmovement.creator.page.title}">Product creator page</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    <link rel="stylesheet" media="screen" th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"/>
+
+
+    <script th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.5/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap-datepicker/1.6.0/dist/js/bootstrap-datepicker.min.js}"></script>
+</head>
+<body>
+<div th:replace="fragments :: header">Header</div>
+<div class="container">
+    <form class="form-horizontal" th:action="@{'/stockmovement/create/'}" th:object="${stockMovementDTO}" method="post"
+          role="form">
+        <fieldset>
+            <legend th:text="#{table.stockmovement.title}">New StockMovement</legend>
+
+            <input type="hidden" th:field="*{id}"/>
+            <input type="hidden" th:field="*{productId}"/>
+
+            <div class="form-group">
+                <label for="inputDescription" class="col-xs-2 control-label" th:text="#{stockmovement.description}">Stockmovement
+                    desc:</label>
+
+                <div class="col-xs-4">
+                    <input type="text" class="form-control" id="inputDescription"
+                           th:placeholder="#{stockmovement.description}"
+                           placeholder="Stockmovement description" name="description"
+                           th:field="*{description}"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputName" class="col-xs-2 control-label" th:text="#{stockmovement.quantity}">StockMovement
+                    quantity:</label>
+
+                <div class="col-xs-4" th:classappend="${#fields.hasErrors('quantity')}? 'has-error'">
+                    <input type="text" class="form-control" id="inputName" th:placeholder="#{stockmovement.quantity}"
+                           placeholder="Stockmovement quantity" name="quantity"
+                           th:field="*{quantity}"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2 control-label" th:text="#{stockmovement.type}">StockMovement
+                    Type:</label>
+
+                <div class="col-xs-4">
+                    <select th:field="*{type}">
+                        <option th:each="ty : ${allTypes}"
+                                th:value="${ty}"
+                                th:text="#{${'stockmovement.type.' + ty}}">Incoming</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2 control-label" th:text="#{stockmovement.warehouse}">StockMovement
+                    WH:</label>
+
+                <select th:field="*{wareHouseId}">
+                    <option th:each="wh : ${allWarehouses}"
+                            th:value="${wh.id}"
+                            th:text="${wh.name}">Warehouse 1</option>
+                </select>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-xs-offset-2 col-xs-10">
+                    <button type="submit" class="btn btn-success" th:text="#{stockmovement.save}">Submit</button>
+                </div>
+            </div>
+        </fieldset>
+
+    </form>
+</div>
+
+</body>
+</html>

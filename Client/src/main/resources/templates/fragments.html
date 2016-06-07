@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+
+<nav th:fragment="header" class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header navbar-brand" th:text="#{title}">WebSiteName</div>
+        <div>
+            <ul class="nav navbar-nav">
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"
+                                        th:text="#{navbar.warehouse}">Warehouse <span
+                        class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" th:href="@{/warehouse/create_warehouse}"
+                               th:text="#{warehouse.create}">Create</a></li>
+                        <li><a href="#" th:href="@{/warehouse/list_warehouses}" th:text="#{warehouse.list}">List</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"
+                                        th:text="#{navbar.product}">Product <span
+                        class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" th:href="@{/product/create_product}" th:text="#{product.create}">Create</a>
+                        </li>
+                        <li><a href="#" th:href="@{/product/list_products}" th:text="#{product.list}">List</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div th:fragment="stockmovement_block" th:if="!${#lists.isEmpty(stockMovementBlockList)}">
+    <h3 th:text="#{table.warehousestockmovements.title}">Stockmovements of Warehouse</h3>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th th:text="#{table.warehousestockmovements.header.name}">Name</th>
+            <th th:text="#{table.warehousestockmovements.header.quantity}">Quantity</th>
+            <th th:text="#{table.warehousestockmovements.header.type}">Type</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="smb : ${stockMovementBlockList}">
+            <td th:text="${smb.name}">Apple</td>
+            <td th:inline="text">[[${smb.quantity}]] kg</td>
+            <td th:text="#{${'stockmovement.type.' + smb.type}}">INCOME</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:fragment="stockmovement_block" th:if="${#lists.isEmpty(stockMovementBlockList)}">
+    <h3 th:text="#{table.warehousestockmovements.title}">Stockmovements of Warehouse</h3>
+    <span th:text="#{warehousestockmovements.isempty}"></span>
+</div>
+
+
+</body>
+</html>

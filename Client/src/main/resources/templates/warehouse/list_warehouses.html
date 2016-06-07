@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="#{wareHouse.list.page.title}">Warehouse creator page</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width"/>
+
+    <link rel="stylesheet" media="screen" th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"/>
+    <script th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.5/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div th:replace="fragments :: header">Header</div>
+<div class="container">
+    <h2 th:text="#{table.warehouse.title}">Warehouses</h2>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th th:text="#{table.warehouse.header.name}">Name</th>
+            <th th:text="#{table.warehouse.header.description}">Description</th>
+            <th th:text="#{table.warehouse.header.creationDate}">Creation Date</th>
+            <th th:text="#{table.warehouse.header.validityDate}">Validity Date</th>
+            <th><span class="glyphicon glyphicon-edit"></span></th>
+            <th><span class="glyphicon glyphicon-remove-circle"></span></th>
+            <th><span class="glyphicon glyphicon-info-sign"></span></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="wh : ${wareHouseDTOList}">
+            <td th:text="${wh.name}">Warehouse Budapest</td>
+            <td th:text="${wh.description}">Warehouse for toxic substance</td>
+            <td th:text="${{wh.creationDate}}">2015-12-12</td>
+            <td th:text="${{wh.validityDate}}">2016-12-13</td>
+            <td><a th:href="@{${'/warehouse/modify/' + wh.id}}"><span th:text="#{table.modify}">Modify</span></a></td>
+            <td><a th:href="@{${'/warehouse/delete/' + wh.id}}"><span th:text="#{table.delete}">Delete</span></a></td>
+            <td>
+                <button th:attr="data-warehouse_id=${wh.id}" type="button" class="btn btn-info list-stockmovements">Info
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div id="resultsBlock"></div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("body").on("click", ".list-stockmovements", function (e) {
+            var id = $(this).attr("data-warehouse_id");
+            var url = '/stockmovement/list_stockmovement_block/';
+            url = url + id;
+            $("#resultsBlock").load(url);
+        });
+    });
+</script>
+</body>
+</html>

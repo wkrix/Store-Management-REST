@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="#{product.creator.page.title}">Product creator page</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    <link rel="stylesheet" media="screen" th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" media="screen"
+          th:href="@{/webjars/bootstrap-datepicker/1.6.0/dist/css/bootstrap-datepicker3.min.css}"/>
+    <!--<link rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}"/>-->
+    <script th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.5/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap-datepicker/1.6.0/dist/js/bootstrap-datepicker.min.js}"></script>
+</head>
+<body>
+<div th:replace="fragments :: header">Header</div>
+<div class="container">
+    <form class="form-horizontal" th:action="@{'/product/create/'}" th:object="${productDTO}" method="post"
+          role="form">
+        <fieldset>
+            <legend th:text="#{table.newproduct.title}">New Product</legend>
+
+            <input type="hidden" th:field="*{id}"/>
+            <input type="hidden" th:field="*{{creationDate}}"/>
+
+            <div class="form-group">
+                <label for="inputName" class="col-xs-2 control-label" th:text="#{product.name}">Product
+                    name:</label>
+
+                <div class="col-xs-4">
+                    <input type="text" class="form-control" id="inputName" th:placeholder="#{product.name}"
+                           placeholder="Product name" name="name"
+                           th:field="*{name}"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputDescription" class="col-xs-2 control-label" th:text="#{product.description}">Product
+                    desc:</label>
+
+                <div class="col-xs-4">
+                    <input type="text" class="form-control" id="inputDescription"
+                           th:placeholder="#{product.description}"
+                           placeholder="Product description" name="description"
+                           th:field="*{description}"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputValidityDate" class="col-xs-2 control-label" th:text="#{product.validityDate}">Product
+                    Valdity Date:</label>
+
+                <div class="col-xs-4">
+                    <input type="text" class="form-control" id="inputValidityDate"
+                           th:placeholder="#{product.validityDate}"
+                           placeholder="Product Valdity Date" name="validityDate"
+                           th:field="*{{validityDate}}"/>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="col-xs-offset-2 col-xs-10">
+                    <button type="submit" class="btn btn-success" th:text="#{product.save}">Submit</button>
+                </div>
+            </div>
+        </fieldset>
+
+    </form>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#inputValidityDate').datepicker({
+            format: 'yyyy-mm-dd',
+            language: 'hu-HU'
+        });
+    });
+</script>
+</body>
+</html>
